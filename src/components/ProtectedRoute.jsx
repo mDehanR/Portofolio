@@ -7,16 +7,21 @@ export default function ProtectedRoute({ children }) {
 
   useEffect(() => {
     const check = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return setAllowed(false)
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return setAllowed(false)
 
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single()
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single()
 
-      setAllowed(profile?.role === 'admin')
+        setAllowed(profile?.role === 'admin')
+      } catch (error) {
+        console.error("ProtectedRoute error:", error)
+        setAllowed(false)
+      }
     }
     check()
   }, [])

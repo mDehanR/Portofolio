@@ -13,19 +13,27 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault()
     setLoading(true)
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) { alert(error.message); setLoading(false); return }
+    
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+      if (error) { alert(error.message); setLoading(false); return }
+      if (!data.user) { alert('Login failed'); setLoading(false); return }
 
-    const { data: profile } = await supabase
-      .from('profiles').select('role').eq('id', data.user.id).single()
+      const { data: profile } = await supabase
+        .from('profiles').select('role').eq('id', data.user.id).single()
 
-    if (profile?.role !== 'admin') {
-      alert('Access denied')
-      await supabase.auth.signOut()
+      if (profile?.role !== 'admin') {
+        alert('Access denied')
+        await supabase.auth.signOut()
+        setLoading(false);
+        return
+      }
+      navigate('/dashboard')
+    } catch (err) {
+      console.error("Login error:", err)
+      alert('An error occurred during login')
       setLoading(false)
-      return
     }
-    navigate('/dashboard')
   }
 
   return (
