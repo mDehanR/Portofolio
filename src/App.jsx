@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useState, lazy, Suspense } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import "./index.css";
-import Navbar from "./components/Navbar";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
 import AnimatedBackground from "./components/Background";
@@ -32,15 +31,15 @@ const LandingPage = ({ showWelcome, setShowWelcome }) => {
 
       {!showWelcome && (
         <>
-          <Navbar />
-      
-          <Home />
-          <About />
-          <Suspense fallback={<div className="h-20" />}>
-            <Portofolio />
-            <ContactPage />
-          </Suspense>
-          <Footer />
+          <div>
+            <Home />
+            <About />
+            <Suspense fallback={<div className="h-20" />}>
+              <Portofolio />
+              <ContactPage />
+            </Suspense>
+            <Footer />
+          </div>
         </>
       )}
     </>

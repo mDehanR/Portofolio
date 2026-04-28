@@ -2,6 +2,7 @@ import React, { useEffect, memo, useMemo } from "react"
 import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, UserCheck } from "lucide-react"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import profileImage from '../assets/pphan.jpg'
 
 // Memoized Components
 const Header = memo(() => (
@@ -50,7 +51,7 @@ const ProfileImage = memo(() => (
           <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 via-transparent to-blue-500/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden sm:block" />
           
           <img
-            src="/Photo.jpg"
+            src={profileImage}
             alt="Profile"
             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2"
             loading="lazy"
@@ -209,7 +210,7 @@ const AboutPage = () => {
                 data-aos-duration="1300"
                 itemProp="name"
               >
-                Eki Zulfar Rachman
+                Portfolio Owner
               </span>
             </h2>
             
@@ -218,8 +219,8 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-        Saya adalah mahasiswa Teknik Informatika yang berfokus pada pengembangan Front-End. 
-Saya berfokus pada penciptaan pengalaman digital yang menarik dan selalu berupaya memberikan solusi terbaik dalam setiap proyek yang saya kerjakan.
+        Saya siswa SMK kelas 10 yang sedang belajar pengembangan Back-End.
+Saya fokus membangun kemampuan dasar pemrograman dan membuat project sederhana secara konsisten.
                   </p>
 
                {/* Quote Section */}

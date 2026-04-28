@@ -137,7 +137,7 @@ const ProjectDetails = () => {
         ...selectedProject,
         Features: selectedProject.Features || [],
         TechStack: selectedProject.TechStack || [],
-        Github: selectedProject.Github || "https://github.com/EkiZR",
+        Github: selectedProject.Github || "https://github.com/",
       };
       setProject(enhancedProject);
     }
@@ -156,47 +156,18 @@ const ProjectDetails = () => {
     );
   }
 
-  const projectUrl = `https://ekizr.com/project/${toSlug(project.Title)}`;
-
   return (
     <>
       <Helmet>
-        <title>{project.Title} — Eki Zulfar Rachman</title>
+        <title>{project.Title} — Portfolio</title>
         <meta
           name="description"
           content={
             project.Description
               ? project.Description.slice(0, 155)
-              : `Project ${project.Title} oleh Eki Zulfar Rachman — Frontend Web Developer.`
+              : `Project ${project.Title} oleh seorang Back-End Developer.`
           }
         />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={projectUrl} />
-        <meta
-          property="og:title"
-          content={`${project.Title} — Eki Zulfar Rachman`}
-        />
-        <meta
-          property="og:description"
-          content={project.Description?.slice(0, 155)}
-        />
-        <meta property="og:url" content={projectUrl} />
-        <meta property="og:type" content="website" />
-        {project.Img && <meta property="og:image" content={project.Img} />}
-        <script type="application/ld+json">{`
-          {
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            "name": "${project.Title}",
-            "description": "${project.Description?.replace(/"/g, '\\"')}",
-            "url": "${projectUrl}",
-            "author": {
-              "@type": "Person",
-              "name": "Eki Zulfar Rachman",
-              "url": "https://ekizr.com"
-            }
-          }
-        `}</script>
       </Helmet>
 
       <div className="min-h-screen bg-[#030014] px-[2%] sm:px-0 relative overflow-hidden">
