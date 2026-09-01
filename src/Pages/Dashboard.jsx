@@ -1,26 +1,26 @@
-import { useState } from 'react'
-import { Routes, Route, Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { supabase } from '../supabase'
-import Projects from './dashboard/Projects'
-import Certificates from './dashboard/Certificates'
-import Comments from './dashboard/Comments'
-import { FolderGit2, Award, MessageSquare, LogOut, LayoutDashboard, Menu } from 'lucide-react'
+import { useState } from "react";
+import { Routes, Route, Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { supabase } from "../supabase";
+import Projects from "./dashboard/Projects";
+import Comments from "./dashboard/Comments";
+import { FolderGit2, Award, MessageSquare, LogOut, LayoutDashboard, Menu } from "lucide-react";
+import Certificates from "./dashboard/Certificates";
 
 const NAV_ITEMS = [
-  { to: 'projects', label: 'Projects', icon: FolderGit2 },
-  { to: 'certificates', label: 'Certificates', icon: Award },
-  { to: 'comments', label: 'Comments', icon: MessageSquare },
-]
+  { to: "projects", label: "Projects", icon: FolderGit2 },
+  { to: "certificates", label: "Certificates", icon: Award },
+  { to: "comments", label: "Comments", icon: MessageSquare },
+];
 
 export default function Dashboard() {
-  const location = useLocation()
-  const navigate = useNavigate()
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut()
-    navigate('/login')
-  }
+    await supabase.auth.signOut();
+    navigate("/login");
+  };
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full p-5 gap-6">
@@ -41,30 +41,28 @@ export default function Dashboard() {
       {/* Badge */}
       <div className="shrink-0 px-3 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center gap-2">
         <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-        <span className="text-indigo-300 text-xs font-medium">Portfolio Manager</span>
+        <span className="text-indigo-300 text-xs font-medium">Portofolio Manager</span>
       </div>
 
       {/* Nav */}
       <nav className="flex flex-col gap-1 flex-1 min-h-0">
         <p className="text-[10px] text-gray-600 uppercase tracking-widest px-3 mb-2 shrink-0">Menu</p>
         {NAV_ITEMS.map(({ to, label, icon: Icon }) => {
-          const active = location.pathname.includes(to)
+          const active = location.pathname.includes(to);
           return (
             <Link
               key={to}
               to={to}
               onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-sm font-medium shrink-0 ${
-                active
-                  ? 'bg-gradient-to-r from-indigo-500/20 to-purple-500/15 border border-indigo-500/30 text-white'
-                  : 'text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent'
+                active ? "bg-gradient-to-r from-indigo-500/20 to-purple-500/15 border border-indigo-500/30 text-white" : "text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent"
               }`}
             >
-              <Icon className={`w-4 h-4 shrink-0 ${active ? 'text-indigo-400' : ''}`} />
+              <Icon className={`w-4 h-4 shrink-0 ${active ? "text-indigo-400" : ""}`} />
               {label}
               {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-400" />}
             </Link>
-          )
+          );
         })}
       </nav>
 
@@ -77,33 +75,21 @@ export default function Dashboard() {
         Sign Out
       </button>
     </div>
-  )
+  );
 
   return (
     // Kunci: TIDAK pakai overflow-hidden di sini supaya scrollbar main bisa diklik
-    <div className="flex text-white" style={{ height: '100dvh' }}>
+    <div className="flex text-white" style={{ height: "100dvh" }}>
       {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-20 bg-black/60 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+      {sidebarOpen && <div className="fixed inset-0 z-20 bg-black/60 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
       {/* Sidebar - desktop: sticky, tinggi 100dvh */}
-      <aside
-        className="hidden lg:flex w-60 shrink-0 flex-col border-r border-white/8 bg-white/3 backdrop-blur-xl"
-        style={{ height: '100dvh', position: 'sticky', top: 0 }}
-      >
+      <aside className="hidden lg:flex w-60 shrink-0 flex-col border-r border-white/8 bg-white/3 backdrop-blur-xl" style={{ height: "100dvh", position: "sticky", top: 0 }}>
         <SidebarContent />
       </aside>
 
       {/* Sidebar - mobile drawer */}
-      <aside
-        className={`fixed inset-y-0 left-0 z-30 w-60 flex flex-col border-r border-white/8 bg-[#0a0a1a] backdrop-blur-xl transition-transform duration-300 lg:hidden ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
+      <aside className={`fixed inset-y-0 left-0 z-30 w-60 flex flex-col border-r border-white/8 bg-[#0a0a1a] backdrop-blur-xl transition-transform duration-300 lg:hidden ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <SidebarContent />
       </aside>
 
@@ -111,10 +97,7 @@ export default function Dashboard() {
       <div className="flex-1 flex flex-col min-w-0 min-h-0">
         {/* Mobile topbar */}
         <div className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-white/8 bg-white/3 backdrop-blur-xl shrink-0">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="p-2 rounded-lg border border-white/10 text-gray-400 hover:text-white transition-colors"
-          >
+          <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg border border-white/10 text-gray-400 hover:text-white transition-colors">
             <Menu className="w-4 h-4" />
           </button>
           <span className="text-sm font-medium text-white">Dashboard</span>
@@ -131,5 +114,5 @@ export default function Dashboard() {
         </main>
       </div>
     </div>
-  )
+  );
 }
